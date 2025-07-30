@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gastos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="p-4 sm:p-6 md:p-8 lg:p-10">
+    <div class="max-w-6xl w-full bg-white shadow-lg rounded-xl p-6 sm:p-8 md:p-10 mb-8">
+        <h1 class="text-3xl sm:text-4xl font-bold text-center text-red-700 mb-6">Registro de Gastos</h1>
+
+        <div class="flex justify-center mb-6 border-b border-gray-200">
+            <a href="pagina_gastos.html" class="nav-button px-6 py-3 text-lg font-medium bg-red-600 text-white border-b-2 border-red-600 rounded-t-lg">Gastos</a>
+            <a href="pagina_balance.html" class="nav-button px-6 py-3 text-lg font-medium text-gray-700 hover:bg-gray-100">Resumen</a>
+            <a href="pagina_ingresos.html" class="nav-button px-6 py-3 text-lg font-medium text-gray-700 hover:bg-gray-100">Ingresos</a>
+        </div>
+
+        <div>
+            <h2 class="text-2xl font-semibold text-red-700 mb-4">Agregar Nuevo Gasto</h2>
+            <div class="mb-6 p-4 bg-red-50 rounded-lg shadow-inner">
+                <form id="expenseForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="expense-date" class="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
+                        <input type="date" id="expense-date" required class="w-full p-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 shadow-sm">
+                    </div>
+                    <div>
+                        <label for="expense-category" class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+                        <select id="expense-category" required class="w-full p-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 shadow-sm">
+                            <option value="">Selecciona una categoría</option>
+                            <option value="Sueldos y Salarios">Sueldos y Salarios</option>
+                            <option value="Alquileres">Alquileres</option>
+                            <option value="Servicios Publicos">Servicios Públicos</option>
+                            <option value="Materiales y Suministros">Materiales y Suministros</option>
+                            <option value="Transporte y Logistica">Transporte y Logística</option>
+                            <option value="Marketing y Publicidad">Marketing y Publicidad</option>
+                            <option value="Mantenimiento y Reparaciones">Mantenimiento y Reparaciones</option>
+                            <option value="Depreciacion">Depreciación</option>
+                            <option value="Impuestos y Tasas">Impuestos y Tasas</option>
+                            <option value="Intereses Bancarios">Intereses Bancarios</option>
+                            <option value="Comisiones">Comisiones</option>
+                            <option value="Seguros">Seguros</option>
+                            <option value="Gastos de Viaje">Gastos de Viaje</option>
+                            <option value="Amortizaciones">Amortizaciones</option>
+                            <option value="Otros Gastos Operativos">Otros Gastos Operativos</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="expense-description" class="block text-sm font-medium text-gray-700 mb-1">Descripción (Opcional)</label>
+                        <input type="text" id="expense-description" class="w-full p-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 shadow-sm">
+                    </div>
+                    <div>
+                        <label for="expense-amount" class="block text-sm font-medium text-gray-700 mb-1">Monto</label>
+                        <input type="number" id="expense-amount" step="0.01" required class="w-full p-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 shadow-sm">
+                    </div>
+                    <div>
+                        <label for="expense-currency" class="block text-sm font-medium text-gray-700 mb-1">Moneda</label>
+                        <select id="expense-currency" class="w-full p-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 shadow-sm">
+                            <option value="USD">USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                            <option value="JPY">JPY (¥)</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2 flex justify-center mt-4">
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">Agregar Gasto</button>
+                    </div>
+                </form>
+            </div>
+            <div id="message-box" class="mt-4 p-3 rounded-md text-center hidden"></div>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Listado de Gastos</h3>
+            <div class="flex flex-col sm:flex-row justify-end items-center gap-4 mb-4">
+                <select id="main-filter-type" class="p-2 border border-gray-300 rounded-md shadow-sm">
+                    <option value="all">Todo</option>
+                    <option value="today">Hoy</option>
+                    <option value="currentMonth">Este Mes</option>
+                    <option value="currentYear">Este Año</option>
+                    <option value="specificDay">Día Específico</option>
+                    <option value="specificMonth">Mes Específico</option>
+                    <option value="specificYear">Año Específico</option>
+                </select>
+
+                <input type="date" id="specific-day-input" class="p-2 border border-gray-300 rounded-md shadow-sm hidden">
+
+                <select id="specific-month-select" class="p-2 border border-gray-300 rounded-md shadow-sm hidden">
+                </select>
+                <input type="number" id="specific-year-input" class="p-2 border border-gray-300 rounded-md shadow-sm hidden" placeholder="Año (YYYY)">
+
+                <button id="apply-filter-btn" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300">Aplicar Filtro</button>
+            </div>
+            <div id="expense-list" class="space-y-3">
+                <p class="text-gray-500 text-center" id="no-expenses-message">No hay gastos registrados aún.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 class="text-xl font-bold mb-4">Editar Gasto</h2>
+            <form id="editForm" class="grid grid-cols-1 gap-4">
+                <input type="hidden" id="edit-id">
+                <input type="hidden" id="edit-type">
+                <div>
+                    <label for="edit-date" class="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
+                    <input type="date" id="edit-date" required class="w-full p-3 border border-gray-300 rounded-md">
+                </div>
+                <div>
+                    <label for="edit-category" class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+                    <select id="edit-category" required class="w-full p-3 border border-gray-300 rounded-md">
+                    </select>
+                </div>
+                <div>
+                    <label for="edit-description" class="block text-sm font-medium text-gray-700 mb-1">Descripción (Opcional)</label>
+                    <input type="text" id="edit-description" class="w-full p-3 border border-gray-300 rounded-md">
+                </div>
+                <div>
+                    <label for="edit-amount" class="block text-sm font-medium text-gray-700 mb-1">Monto</label>
+                    <input type="number" id="edit-amount" step="0.01" required class="w-full p-3 border border-gray-300 rounded-md">
+                </div>
+                <div>
+                    <label for="edit-currency" class="block text-sm font-medium text-gray-700 mb-1">Moneda</label>
+                    <select id="edit-currency" class="w-full p-3 border border-gray-300 rounded-md">
+                        <option value="USD">USD ($)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="GBP">GBP (£)</option>
+                        <option value="JPY">JPY (¥)</option>
+                    </select>
+                </div>
+                <div class="flex justify-center mt-4">
+                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script_gastos.js"></script>
+</body>
+</html>

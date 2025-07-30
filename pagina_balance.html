@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="p-4 sm:p-6 md:p-8 lg:p-10">
+    <div class="max-w-6xl w-full bg-white shadow-lg rounded-xl p-6 sm:p-8 md:p-10 mb-8">
+        <h1 class="text-3xl sm:text-4xl font-bold text-center text-yellow-700 mb-6">EQUILIBRIO</h1>
+
+        <div class="flex justify-center mb-6 border-b border-gray-200">
+            <a href="pagina_gastos.html" class="nav-button px-6 py-3 text-lg font-medium text-gray-700 hover:bg-gray-100">Gastos</a>
+            <a href="pagina_balance.html" class="nav-button px-6 py-3 text-lg font-medium bg-yellow-600 text-white border-b-2 border-yellow-600 rounded-t-lg">Resumen</a>
+            <a href="pagina_ingresos.html" class="nav-button px-6 py-3 text-lg font-medium text-gray-700 hover:bg-gray-100">Ingresos</a>
+        </div>
+
+        <div class="mb-8 p-6 bg-yellow-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-semibold text-yellow-800 mb-4">Balance Financiero</h2>
+            <div class="flex flex-col sm:flex-row justify-end items-center gap-4 mb-4">
+                <select id="main-filter-type" class="p-2 border border-gray-300 rounded-md shadow-sm">
+                    <option value="all">Todo</option>
+                    <option value="today">Hoy</option>
+                    <option value="currentMonth">Este Mes</option>
+                    <option value="currentYear">Este Año</option>
+                    <option value="specificDay">Día Específico</option>
+                    <option value="specificMonth">Mes Específico</option>
+                    <option value="specificYear">Año Específico</option>
+                </select>
+
+                <input type="date" id="specific-day-input" class="p-2 border border-gray-300 rounded-md shadow-sm hidden">
+
+                <select id="specific-month-select" class="p-2 border border-gray-300 rounded-md shadow-sm hidden">
+                    
+                </select>
+                <input type="number" id="specific-year-input" class="p-2 border border-gray-300 rounded-md shadow-sm hidden" placeholder="Año (YYYY)">
+
+                <button id="apply-filter-btn" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300">Aplicar Filtro</button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                <div class="bg-white p-4 rounded-md shadow-sm border border-gray-200">
+                    <p class="text-sm text-gray-500">Total de Gastos</p>
+                    <p id="total-gastos" class="text-xl font-bold text-red-600">USD 0.00</p>
+                </div>
+                <div class="bg-white p-4 rounded-md shadow-sm border border-gray-200">
+                    <p class="text-sm text-gray-500">Total de Ingresos</p>
+                    <p id="total-ingresos" class="text-xl font-bold text-green-600">USD 0.00</p>
+                </div>
+                <div class="bg-white p-4 rounded-md shadow-sm border border-gray-200">
+                    <p class="text-sm text-gray-500">Balance</p>
+                    <p id="balance-total" class="text-xl font-bold text-yellow-600">USD 0.00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script_balance.js"></script>
+</body>
+</html>
